@@ -1,16 +1,17 @@
 package com.project.exoplayergesture
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Point
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -28,7 +29,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+        val intent = intent
+        val path = intent.data.toString()
+
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+        }
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         var isLeftGesture = true
@@ -42,8 +54,7 @@ class MainActivity : AppCompatActivity() {
         getScreenSize()
         makeFullScreen()
 
-        val uriString = "Put your contents Uri"
-        val uri = Uri.parse(uriString)
+        val uri = Uri.parse(path.toString())
 
         val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "ExoPlayer"))
         val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
@@ -61,10 +72,10 @@ class MainActivity : AppCompatActivity() {
 
             when (motionEvent.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
-                    isControlHidden = if(isControlHidden) {
+                    isControlHidden = if (isControlHidden) {
                         playerView.showController()
                         false
-                    } else{
+                    } else {
                         playerView.hideController()
                         true
                     }
@@ -86,32 +97,44 @@ class MainActivity : AppCompatActivity() {
                     val diffX = (Math.floor(x2 - x)).toInt()
                     var diffY = (Math.floor(y2 - y)).toInt()
 
-                    if(Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) >= 70) {
-                        if(isLeftGesture){
-                            brightness = if(y < y2) {
+                    if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) >= 70) {
+                        if (isLeftGesture) {
+                            brightness = if (y < y2) {
                                 (brightness - 0.1F)
                             } else {
                                 (brightness + 0.1F)
                             }
-                            if(brightness < 0) {
+                            if (brightness < 0) {
                                 brightness = 0F
-                            }
-                            else if(brightness > 1.0) {
+                            } else if (brightness > 1.0) {
                                 brightness = 1F
                             }
                             lp.screenBrightness = brightness
                             window.attributes = lp
                             gestureImage.setBackgroundResource(R.drawable.brightness)
                             gestureImage.visibility = View.VISIBLE
-                        }
-                        else{
-                            if(y < y2) {
-                                audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND)
+                        } else {
+                            if (y < y2) {
+                                audioManager.adjustVolume(
+                                    AudioManager.ADJUST_LOWER,
+                                    AudioManager.FLAG_PLAY_SOUND
+                                )
+                            } else {
+                                audioManager.adjustVolume(
+                                    AudioManager.ADJUST_RAISE,
+                                    AudioManager.FLAG_PLAY_SOUND
+                                )
                             }
-                            else {
-                                audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND)
+                            val curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                            if(curVolume>=8){
+                                gestureImage.setBackgroundResource(R.drawable.full)
                             }
-                            gestureImage.setBackgroundResource(R.drawable.sound)
+                            else if(curVolume<8){
+                                gestureImage.setBackgroundResource(R.drawable.low)
+                            }
+                            if(curVolume == 0){
+                                gestureImage.setBackgroundResource(R.drawable.mute)
+                            }
                             gestureImage.visibility = View.VISIBLE
                         }
                         y = y2.toFloat()

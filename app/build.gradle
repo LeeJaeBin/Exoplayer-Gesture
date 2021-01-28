@@ -1,11 +1,16 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.LeeJaeBin'
+
 android {
     compileSdkVersion 29
+    buildToolsVersion "23.0.1"
     defaultConfig {
         applicationId "com.project.exoplayergesture"
         minSdkVersion 23
@@ -31,6 +36,16 @@ android {
     }
 }
 
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -44,3 +59,4 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.11.4'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.4'
 }
+

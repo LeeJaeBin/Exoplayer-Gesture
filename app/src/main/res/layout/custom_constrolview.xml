@@ -31,6 +31,14 @@
             android:layout_height="wrap_content">
 
         <ImageButton
+                app:layout_constraintRight_toLeftOf="@id/exo_play"
+                android:layout_marginRight="70dp"
+                android:id="@+id/exo_rew"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/rewind"/>
+
+        <ImageButton
                 app:layout_constraintRight_toLeftOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
                 android:id="@id/exo_play"
@@ -45,6 +53,14 @@
                 android:background="@drawable/pause"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
+
+        <ImageButton
+                app:layout_constraintLeft_toRightOf="@id/exo_play"
+                android:layout_marginLeft="70dp"
+                android:id="@+id/exo_ffwd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/forward"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
