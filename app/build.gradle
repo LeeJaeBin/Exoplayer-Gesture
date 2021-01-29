@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
@@ -10,7 +10,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "23.0.1"
     defaultConfig {
-        applicationId "com.project.exoplayergesture"
+        //applicationId "com.project.exoplayergesture"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
