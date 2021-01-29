@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Point
+import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
@@ -17,8 +18,15 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.activity_player.*
+import kotlinx.android.synthetic.main.custom_constrolview.*
 
 class PlayerActivity : AppCompatActivity() {
+
+    public var PAUSE_BACKGROUND = 0;
+    public var PLAY_BACKGROUND = 1;
+
+    public var mPauseBackground: Drawable? = null
+    public var mPlayBackground: Drawable? = null
 
     private lateinit var player: SimpleExoPlayer
     private var screenWidth: Int = 0
@@ -28,6 +36,9 @@ class PlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+
+        exo_pause.background = mPauseBackground
+        exo_play.background = mPlayBackground
 
         val intent = intent
         val path = intent.data.toString()
@@ -178,5 +189,14 @@ class PlayerActivity : AppCompatActivity() {
         super.onDestroy()
         player.stop()
         player.release()
+    }
+
+    public fun initPlayerUi(flag: Int, drawable: Drawable) {
+        if(flag == PAUSE_BACKGROUND) {
+            mPauseBackground = drawable
+        }
+        else if(flag == PLAY_BACKGROUND) {
+            mPlayBackground = drawable
+        }
     }
 }
