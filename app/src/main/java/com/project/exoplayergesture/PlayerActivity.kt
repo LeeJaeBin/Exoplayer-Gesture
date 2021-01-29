@@ -32,6 +32,8 @@ class PlayerActivity : AppCompatActivity() {
         val intent = intent
         val path = intent.data.toString()
 
+        val url:String = intent.getStringExtra("url").toString()
+
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
@@ -54,7 +56,7 @@ class PlayerActivity : AppCompatActivity() {
         getScreenSize()
         makeFullScreen()
 
-        val uri = Uri.parse(path.toString())
+        val uri = Uri.parse(url.toString())
 
         val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "ExoPlayer"))
         val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
