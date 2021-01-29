@@ -37,13 +37,18 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
-        exo_pause.background = mPauseBackground
-        exo_play.background = mPlayBackground
-
         val intent = intent
         val path = intent.data.toString()
 
         val url:String = intent.getStringExtra("url").toString()
+        val pauseBkg = intent.getIntExtra("pauseBkg", 0)
+        val playBkg = intent.getIntExtra("playBkg", 0)
+
+        val pauseBkgDrawable = getDrawable(pauseBkg)
+        val playBkgDrawable = getDrawable(playBkg)
+
+        exo_pause.background = pauseBkgDrawable
+        exo_play.background = playBkgDrawable
 
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
@@ -189,14 +194,5 @@ class PlayerActivity : AppCompatActivity() {
         super.onDestroy()
         player.stop()
         player.release()
-    }
-
-    public fun initPlayerUi(flag: Int, drawable: Drawable) {
-        if(flag == PAUSE_BACKGROUND) {
-            mPauseBackground = drawable
-        }
-        else if(flag == PLAY_BACKGROUND) {
-            mPlayBackground = drawable
-        }
     }
 }
