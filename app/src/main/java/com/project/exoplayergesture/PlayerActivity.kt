@@ -44,11 +44,13 @@ class PlayerActivity : AppCompatActivity() {
         val pauseBkg = intent.getIntExtra("pauseBkg", 0)
         val playBkg = intent.getIntExtra("playBkg", 0)
 
-        val pauseBkgDrawable = getDrawable(pauseBkg)
-        val playBkgDrawable = getDrawable(playBkg)
+        val pauseBkgDrawable = getDrawable(R.drawable.pause)
+        val playBkgDrawable = getDrawable(R.drawable.play)
 
-        exo_pause.background = pauseBkgDrawable
-        exo_play.background = playBkgDrawable
+        exo_pause.setBackgroundResource(pauseBkg)
+        exo_play.setBackgroundResource(playBkg)
+        /*exo_pause.background = pauseBkgDrawable
+        exo_play.background = playBkgDrawable*/
 
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
