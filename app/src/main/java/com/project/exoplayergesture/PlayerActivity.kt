@@ -40,17 +40,9 @@ class PlayerActivity : AppCompatActivity() {
         val intent = intent
         val path = intent.data.toString()
 
-        val url:String = intent.getStringExtra("url").toString()
+        //val url:String = intent.getStringExtra("url").toString()
         val pauseBkg = intent.getIntExtra("pauseBkg", 0)
         val playBkg = intent.getIntExtra("playBkg", 0)
-
-        val pauseBkgDrawable = getDrawable(R.drawable.pause)
-        val playBkgDrawable = getDrawable(R.drawable.play)
-
-        exo_pause.setBackgroundResource(pauseBkg)
-        exo_play.setBackgroundResource(playBkg)
-        /*exo_pause.background = pauseBkgDrawable
-        exo_play.background = playBkgDrawable*/
 
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
@@ -74,7 +66,7 @@ class PlayerActivity : AppCompatActivity() {
         getScreenSize()
         makeFullScreen()
 
-        val uri = Uri.parse(url.toString())
+        val uri = Uri.parse("url.toString()")
 
         val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "ExoPlayer"))
         val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
