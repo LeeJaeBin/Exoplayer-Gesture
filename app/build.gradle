@@ -7,6 +7,9 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.LeeJaeBin'
 
 android {
+    aaptOptions {
+        cruncherEnabled = false
+     }
     compileSdkVersion 29
     buildToolsVersion "23.0.1"
     defaultConfig {
