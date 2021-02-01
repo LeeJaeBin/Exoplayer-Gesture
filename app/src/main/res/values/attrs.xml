@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="playerView">
+        <attr name="play_icon" format="integer" />
+        <attr name="pause_icon" format="integer" />
+    </declare-styleable>
+</resources>

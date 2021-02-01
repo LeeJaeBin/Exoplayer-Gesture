@@ -42,6 +42,7 @@
                 app:layout_constraintRight_toLeftOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
                 android:id="@id/exo_play"
+                android:background="@drawable/play"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
 
@@ -49,6 +50,7 @@
                 app:layout_constraintRight_toLeftOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
                 android:id="@id/exo_pause"
+                android:background="@drawable/pause"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
 
