@@ -22,12 +22,6 @@ import kotlinx.android.synthetic.main.custom_constrolview.*
 
 class PlayerActivity : AppCompatActivity() {
 
-    public var PAUSE_BACKGROUND = 0;
-    public var PLAY_BACKGROUND = 1;
-
-    public var mPauseBackground: Drawable? = null
-    public var mPlayBackground: Drawable? = null
-
     private lateinit var player: SimpleExoPlayer
     private var screenWidth: Int = 0
     private var screenHeight: Int = 0
@@ -48,11 +42,6 @@ class PlayerActivity : AppCompatActivity() {
             != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
         }
-
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         var isLeftGesture = true
